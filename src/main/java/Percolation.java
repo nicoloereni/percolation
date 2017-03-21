@@ -18,6 +18,7 @@ public class Percolation
     }
 
     private void initGrid() {
+        //TODO loop duplicated
         for(int rowIndex = 1; rowIndex <= dimension; rowIndex++)
         {
             for(int columnIndex = 1; columnIndex <= dimension; columnIndex++)
@@ -67,7 +68,17 @@ public class Percolation
     // number of open sites
     public int numberOfOpenSites()
     {
-        return 0;
+        int result = 0;
+
+        for(int rowIndex = 1; rowIndex <= dimension; rowIndex++)
+        {
+            for(int columnIndex = 1; columnIndex <= dimension; columnIndex++) {
+                if (gridValueAt(rowIndex, columnIndex) == OPEN) {
+                    result++;
+                }
+            }
+        }
+        return result;
     }
 
     // does the system percolate?

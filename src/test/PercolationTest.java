@@ -3,6 +3,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import static junit.framework.TestCase.assertTrue;
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 
 public class PercolationTest {
@@ -17,7 +18,6 @@ public class PercolationTest {
 
     @Test
     public void gridInitToBlocked() throws Exception {
-
         for(int i = 1; i <= DEFAULT_TEST_DIMENSION; i++)
         {
             for(int j = 1; j <= DEFAULT_TEST_DIMENSION; j++)
@@ -90,5 +90,19 @@ public class PercolationTest {
         assertFalse(percolation.isOpen(1,1));
         percolation.open(1,1);
         assertTrue(percolation.isOpen(1,1));
+    }
+
+    @Test
+    public void numberOfOpenSitesReturnProperResponse() throws Exception {
+        assertEquals(0, percolation.numberOfOpenSites());
+
+        percolation.open(1,2);
+        assertEquals(1, percolation.numberOfOpenSites());
+
+        percolation.open(2,2);
+        assertEquals(2, percolation.numberOfOpenSites());
+
+        percolation.open(3,2);
+        assertEquals(3, percolation.numberOfOpenSites());
     }
 }
