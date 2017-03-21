@@ -35,7 +35,7 @@ public class Percolation
 
     private void assignGridValueAt(int rowIndex, int columnIndex, int value) {
 
-        grid[rowIndex -1][columnIndex -1] = value;
+        grid[rowIndex - 1][columnIndex - 1] = value;
 
     }
 
@@ -136,29 +136,55 @@ public class Percolation
 
     private boolean isUpFull(int row, int col) {
 
-        int rowUpIndex = row +1;
-        return rowUpIndex <= this.dimension && isFull(rowUpIndex, col);
+        int rowUpIndex = row + 1;
+        boolean result = false;
 
+        if(rowUpIndex <= this.dimension)
+        {
+            result = gridValueAt(rowUpIndex, col) == FULL || isFull(rowUpIndex, col);
+        }
+
+        return result;
     }
 
     private boolean isBottomFull(int row, int col) {
 
-        int bottomRowIndex = row -1;
-        return bottomRowIndex > 0 && isFull(bottomRowIndex, col);
+        int bottomRowIndex = row - 1;
+        boolean result = false;
 
+        if(bottomRowIndex > 0)
+        {
+            result = gridValueAt(bottomRowIndex, col) == FULL || isFull(bottomRowIndex, col);
+        }
+
+        return result;
     }
 
     private boolean isRightFull(int row, int col) {
 
         int rightColumnIndex = row + 1;
-        return rightColumnIndex <= this.dimension && isFull(row, rightColumnIndex);
+        boolean result = false;
+
+        if(rightColumnIndex <= this.dimension)
+        {
+            result = gridValueAt(row, rightColumnIndex) == FULL || isFull(row, rightColumnIndex);
+        }
+
+        return result;
 
     }
 
     private boolean isLeftFull(int row, int col) {
 
-        int leftColumnIndex = col -1;
-        return leftColumnIndex > 0 && isFull(row, leftColumnIndex);
+        int leftColumnIndex = col - 1;
+        boolean result = false;
+
+        if(leftColumnIndex > 0)
+        {
+            result = gridValueAt(row, leftColumnIndex) == FULL || isFull(row, leftColumnIndex);
+        }
+
+        return result;
 
     }
 

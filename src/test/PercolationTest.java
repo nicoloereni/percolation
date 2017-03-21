@@ -168,8 +168,44 @@ public class PercolationTest {
     }
 
     @Test
-    public void name() throws Exception {
-        
+    public void percolatesReturnProperResponse() throws Exception {
 
+        assertFalse(percolation.percolates());
+
+        percolation.open(1,1);
+        assertFalse(percolation.percolates());
+
+        percolation.open(2,1);
+        assertFalse(percolation.percolates());
+
+        percolation.open(3,1);
+        assertTrue(percolation.percolates());
+    }
+
+    @Test
+    public void percolatesReturnProperResponseNotLinearPath() throws Exception {
+
+        assertFalse(percolation.percolates());
+
+        percolation.open(1,1);
+        assertFalse(percolation.percolates());
+
+        percolation.open(1,2);
+        assertFalse(percolation.percolates());
+
+        percolation.open(2,2);
+        assertFalse(percolation.percolates());
+
+        percolation.open(2,3);
+        assertFalse(percolation.percolates());
+
+        percolation.open(3,1);
+        assertFalse(percolation.percolates());
+
+        percolation.open(3,2);
+        assertFalse(percolation.percolates());
+
+        percolation.open(3,3);
+        assertTrue(percolation.percolates());
     }
 }
