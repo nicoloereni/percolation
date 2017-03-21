@@ -22,7 +22,6 @@ public class Percolation
 
     private void initGrid() {
 
-        //TODO loop duplicated
         for(int rowIndex = 1; rowIndex <= dimension; rowIndex++)
         {
             for(int columnIndex = 1; columnIndex <= dimension; columnIndex++)
@@ -54,7 +53,15 @@ public class Percolation
     {
 
         validateCoordinates(row, col);
-        assignGridValueAt(row, col, OPEN);
+
+        if(row == 1 || hasFullNeighboring(row,col))
+        {
+            assignGridValueAt(row, col, FULL);
+        }
+        else
+        {
+            assignGridValueAt(row, col, OPEN);
+        }
 
     }
 
@@ -63,7 +70,8 @@ public class Percolation
     {
 
         validateCoordinates(row, col);
-        return gridValueAt(row, col) == OPEN;
+
+        return gridValueAt(row, col) == OPEN || gridValueAt(row, col) == FULL;
 
     }
 
@@ -88,12 +96,10 @@ public class Percolation
         }
         else if (row == 1 && open)
         {
-            assignGridValueAt(row, col, FULL);
             result = true;
         }
         else if(open && hasFullNeighboring(row, col))
         {
-            assignGridValueAt(row, col, FULL);
             result = true;
         }
 
@@ -111,22 +117,18 @@ public class Percolation
         }
         else if(isLeftFull(row, col))
         {
-            assignGridValueAt(row, col, FULL);
             result = true;
         }
         else if(isRightFull(row, col))
         {
-            assignGridValueAt(row, col, FULL);
             result = true;
         }
         else if(isBottomFull(row, col))
         {
-            assignGridValueAt(row, col, FULL);
             result = true;
         }
         else if(isUpFull(row, col))
         {
-            assignGridValueAt(row, col, FULL);
             result = true;
         }
 
@@ -137,54 +139,28 @@ public class Percolation
     private boolean isUpFull(int row, int col) {
 
         int rowUpIndex = row + 1;
-        boolean result = false;
+        return rowUpIndex <= this.dimension && (gridValueAt(rowUpIndex, col) == FULL || isFull(rowUpIndex, col));
 
-        if(rowUpIndex <= this.dimension)
-        {
-            result = gridValueAt(rowUpIndex, col) == FULL || isFull(rowUpIndex, col);
-        }
-
-        return result;
     }
 
     private boolean isBottomFull(int row, int col) {
 
         int bottomRowIndex = row - 1;
-        boolean result = false;
+        return bottomRowIndex > 0 && (gridValueAt(bottomRowIndex, col) == FULL || isFull(bottomRowIndex, col));
 
-        if(bottomRowIndex > 0)
-        {
-            result = gridValueAt(bottomRowIndex, col) == FULL || isFull(bottomRowIndex, col);
-        }
-
-        return result;
     }
 
     private boolean isRightFull(int row, int col) {
 
-        int rightColumnIndex = row + 1;
-        boolean result = false;
-
-        if(rightColumnIndex <= this.dimension)
-        {
-            result = gridValueAt(row, rightColumnIndex) == FULL || isFull(row, rightColumnIndex);
-        }
-
-        return result;
+        int rightColumnIndex = col + 1;
+        return rightColumnIndex <= this.dimension && (gridValueAt(row, rightColumnIndex) == FULL || isFull(row, rightColumnIndex));
 
     }
 
     private boolean isLeftFull(int row, int col) {
 
         int leftColumnIndex = col - 1;
-        boolean result = false;
-
-        if(leftColumnIndex > 0)
-        {
-            result = gridValueAt(row, leftColumnIndex) == FULL || isFull(row, leftColumnIndex);
-        }
-
-        return result;
+        return leftColumnIndex > 0 && (gridValueAt(row, leftColumnIndex) == FULL || isFull(row, leftColumnIndex));
 
     }
 
@@ -197,7 +173,7 @@ public class Percolation
         for(int rowIndex = 1; rowIndex <= dimension; rowIndex++)
         {
             for(int columnIndex = 1; columnIndex <= dimension; columnIndex++) {
-                if (gridValueAt(rowIndex, columnIndex) == OPEN) {
+                if (gridValueAt(rowIndex, columnIndex) == OPEN || gridValueAt(rowIndex, columnIndex) == FULL) {
                     result++;
                 }
             }
