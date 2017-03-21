@@ -203,9 +203,7 @@ public class PercolationTest {
         assertFalse(percolation.percolates());
 
         percolation.open(3,2);
-        assertFalse(percolation.percolates());
-
-        percolation.open(3,3);
         assertTrue(percolation.percolates());
+
     }
 }
